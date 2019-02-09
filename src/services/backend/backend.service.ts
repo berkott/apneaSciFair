@@ -115,10 +115,20 @@ export class BackendService {
     }); 
   }
 
+  async sendPostDone(){
+    const mongodb = this.client.getServiceClient(RemoteMongoClient.factory,"mongodb-atlas");
+    
+    await console.log(this.client.auth.user.id);
+
+    return mongodb.db("general").collection('checkState').updateOne({'done': 0}, {'done': 1}); 
+  }
+
   async getMainData(){
     const mongodb = this.client.getServiceClient(RemoteMongoClient.factory,"mongodb-atlas");
 
     return mongodb.db("general").collection('score')
-      .find({userid: this.client.auth.user.id}).toArray();
+      .find().toArray();
+      // Better way but too lazy to implement haha XD:
+      // .find({userid: this.client.auth.user.id}).toArray();
   }
 }

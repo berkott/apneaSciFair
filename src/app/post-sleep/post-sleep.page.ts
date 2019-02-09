@@ -46,6 +46,13 @@ export class PostSleepPage implements OnInit {
       console.log("sent answers successfully");
       this.toaster.toast("Response sent successfully");
       this.modalController.dismiss();
+
+      this.backendService.sendPostDone().then(() => {
+        console.log("Send done successfully");
+      }).catch(err =>{
+        console.log("Could not send done" + err);
+      });
+      
       // this.epworthState = true;
     }).catch(err => {
       this.toaster.toast("Failed to send");
